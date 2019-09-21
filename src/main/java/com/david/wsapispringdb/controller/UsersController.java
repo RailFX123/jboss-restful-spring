@@ -48,7 +48,6 @@ public class UsersController {
         return usuariosRepository.findAll();
     }
 
-
     // Crear un nuevo usuario
     @PostMapping("/usuarios")
     public Usuarios createUser(@Valid @RequestBody Usuarios usuario) {
@@ -56,7 +55,7 @@ public class UsersController {
         if (ok.isPresent()) {
             throw new ResourceConflictException("else", "else", "else");
         } else {
-            new MailClass().SendMail(usuario.getNombre(), usuario.getCredencial().getCorreo(),1005274,"Bienvenido a ClavaFacil");
+            new MailClass().SendMail(usuario.getNombre(), usuario.getCredencial().getCorreo(), 1005274, "Bienvenido a ClavaFacil");
             return usuariosRepository.save(usuario);
         }
     }
@@ -84,14 +83,14 @@ public class UsersController {
 
         Usuarios usuario = usuariosRepository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", noteId));
-        usuario.setCredencial(usuariodetails.getCredencial());
-        usuario.setDpi(usuariodetails.getDpi());
+        usuario.getCredencial().setCorreo(usuariodetails.getCredencial().getCorreo());
+        //usuario.setDpi(usuariodetails.getDpi());
         usuario.setEdad(usuariodetails.getEdad());
         usuario.setNombre(usuariodetails.getNombre());
         usuario.setApellido(usuariodetails.getApellido());
-        usuario.setEstadoMarital(usuariodetails.getEstadoMarital());
-        usuario.setGeneroPersonal(usuariodetails.getGeneroPersonal());
-        usuario.setTiposCliente(usuariodetails.getTiposCliente());
+        //usuario.setEstadoMarital(usuariodetails.getEstadoMarital());
+        //usuario.setGeneroPersonal(usuariodetails.getGeneroPersonal());
+        //usuario.setTiposCliente(usuariodetails.getTiposCliente());
         Usuarios updateMovie = usuariosRepository.save(usuario);
         return updateMovie;
     }
@@ -101,7 +100,8 @@ public class UsersController {
     public ResponseEntity<?> deleteMovie(@PathVariable(value = "id") Long noteId) {
         Usuarios usuario = usuariosRepository.findById(noteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", noteId));
-        credencialRepository.deleteById(usuario.getCredencial().getId_credencial());
+        credencialRepository.delete(usuario.getCredencial());
+        usuariosRepository.delete(usuario);
         return ResponseEntity.ok().build();
     }
 }
