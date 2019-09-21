@@ -67,7 +67,7 @@ public class Usuarios implements Serializable {
     @JoinColumn(name = "id_estado_marital", referencedColumnName = "id_estado_marital")
     private EstadoMarital estadoMarital;
 
-    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "id_credencial", referencedColumnName = "id_credencial")
     @MapsId
     private Credenciales credencial;
