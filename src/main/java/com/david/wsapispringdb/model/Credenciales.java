@@ -45,7 +45,7 @@ public class Credenciales implements Serializable {
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     private Roles rol;
     
-    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, mappedBy = "credencial")
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "credencial")
     private Usuarios usuarios;
 
     /**
